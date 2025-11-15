@@ -11,7 +11,7 @@
     "electron-builder": "^26.0.12"
   },
   "dependencies": {
-    "http-proxy-agent": "^7.0.2",
+    "http-proxy-agent": "^7.0.2" ,
     "https-proxy-agent": "^7.0.6"
   },
   "build": {
