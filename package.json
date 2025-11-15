@@ -1,0 +1,23 @@
+{
+  "name": "myelectronapp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^11.5.0",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "http-proxy-agent": "^7.0.2",
+    "https-proxy-agent": "^7.0.6"
+  },
+  "build": {
+    "appId": "com.example.myelectronapp",
+    "mac": {
+      "target": ["dmg", "zip"]
+    }
+  }
+}
