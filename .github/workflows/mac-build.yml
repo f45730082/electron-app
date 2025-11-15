@@ -1,28 +1,43 @@
-name: Build macOS (Electron 11.5.0)
+name: Build
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
-  build-macos:
-    runs-on: macos-latest
+  build:
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
+    
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 16
+      
       - name: Install dependencies
         run: npm install
-      - name: Build macOS App
-        env:
-          CSC_IDENTITY_AUTO_DISCOVERY: \"false\"
+      
+      - name: Build app
         run: npm run dist
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
         with:
-          name: mac-build
-          path: dist/*
+          name: ${{ matrix.os }}-build
+          path: |
+            dist/*.dmg
+            dist/*.zip
+            dist/*.exe
+            dist/*.AppImage
+            dist/*.deb
